@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Sorting {
-    private static final int size = 100000;
+    private static final int size = 75000;
     private static final int range = 1000;
 
     public static void main(String[] args) {
@@ -24,12 +24,19 @@ public class Sorting {
     }
 
     private static Integer[] selectionSort(Integer[] unsorted){
+        int count = 0;
+        System.out.print("selection sort \nloading");
         Instant start = Instant.now();
         Integer[] sorted = new Integer[size];
         //iterate through unsorted, find minimum
         Integer minimum = Integer.MAX_VALUE;
         int minIndex = -1;
         for(int i = 0; i < size; i ++){
+            count++;
+            if(count == size/50) {
+                System.out.print(".");
+                count = 0;
+            }
             for(int k = 0; k < size; k ++){
                 if(unsorted[k] < minimum){
                     minimum = unsorted[k];
@@ -42,13 +49,20 @@ public class Sorting {
         }
         Instant end = Instant.now();
         Duration timeElapsed = Duration.between(start, end);
-        System.out.println("Time Elapsed Selection Sort: "+timeElapsed.getSeconds());
+        System.out.println("\nTime Elapsed Selection Sort: "+timeElapsed.getSeconds()+" seconds\n");
         return sorted;
     }
 
     private static void bubbleSort(Integer[] array){
+        int count = 0;
+        System.out.print("Bubble sort \nloading");
         Instant start = Instant.now();
         for(int k = 0; k < size; k++){
+            count++;
+            if(count == size/50) {
+                System.out.print(".");
+                count = 0;
+            }
             for(int i = 1; i < size-k; i++){
                 if(array[i-1] > array[i]){
                     //swap
@@ -60,7 +74,7 @@ public class Sorting {
         }
         Instant end = Instant.now();
         Duration timeElapsed = Duration.between(start, end);
-        System.out.println("Time Elapsed Bubble Sort: "+timeElapsed.getSeconds());
+        System.out.println("\nTime Elapsed Bubble Sort: "+timeElapsed.getSeconds()+" seconds\n");
     }
 
     private static void bubbleSortReverse(Integer[] array){
@@ -80,31 +94,6 @@ public class Sorting {
         System.out.println("Time Elapsed Bubble Sort: "+timeElapsed.getSeconds());
     }
 
-    private static void bubbleSort1(Integer[] array){
-        Instant start = Instant.now();
-        while(!sorted(array)){
-            for(int i = 0; i < size-1; i++){
-                if(array[i] > array[i+1]){
-                    //swap
-                    int temp = array[i];
-                    array[i] = array[i+1];
-                    array[i+1] = temp;
-                }
-            }
-        }
-        Instant end = Instant.now();
-        Duration timeElapsed = Duration.between(start, end);
-        System.out.println("Time Elapsed Bubble Sort: "+timeElapsed.getSeconds());
-    }
-
-    public static boolean sorted(Integer[] array){
-        for(int i = 0; i < size-1; i++){
-            if(array[i] > array[i+1]) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     public static Integer[] getRandomNumbers(){
         Random rand = new Random();
